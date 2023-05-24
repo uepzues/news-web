@@ -14,11 +14,15 @@ function GetNews() {
 
   const fetchNews = () => {
     fetch(
-        `https://newsapi.org/v2/everything?q=${inputValue}&sortBy=popularity&apiKey=${apiKey}`
+      `https://newsapi.org/v2/everything?q=${inputValue}&sortBy=popularity&apiKey=${apiKey}`
       // `http://api.mediastack.com/v1/news?access_key=${apiKey}&keywords=${inputValue}&countries=gb`
     )
       .then((res) => res.json())
-      .then((jsonData) => setdata(jsonData.data))
+      .then((jsonData) => {
+        //change articles to data or vice versa if changing api servers
+        setdata(jsonData.articles);
+        // console.log(jsonData.articles);
+      })
       .catch((error) => {
         console.error("Error fetching data", error);
       });
@@ -54,7 +58,7 @@ function GetNews() {
               <>
                 <NewsElement
                   key={article.title}
-                    imgUrl={article.urlToImage}
+                  imgUrl={article.urlToImage}
                   // imgUrl={article.image}
                   title={article.title}
                   desc={article.description}
